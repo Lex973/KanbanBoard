@@ -1,0 +1,30 @@
+.btn {
+    padding: 13px 18px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-family: 'Inter Medium', 'sans-serif';
+    flex: 1;
+}
+.btnSecondary {
+    background: var(--bgSecondary);
+    color: var(--textPrimary);
+    border: 1px solid #2f363D;
+}
+.btnSecondary:hover {
+    background: var(--bgTertiary);
+}
+.btnPrimary {
+    background: linear-gradient(135deg, var(--avocadoMain), var(--avocadoDark));
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 195, 74, 0.3);
+}
+.btnPrimary:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 4px 16px var(--avocadoDark);
+}

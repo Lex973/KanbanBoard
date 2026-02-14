@@ -1,0 +1,24 @@
+.label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: var(--textPrimary);
+    text-transform: uppercase;
+}
+.input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #2f363D;
+    background: var(--bgTertiary);
+    color: var(--textPrimary);
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+.input:focus {
+    outline: none;
+    border-color: var(--avocadoMain);
+    box-shadow: 0 0 0 3px #1f2b15;
+}
