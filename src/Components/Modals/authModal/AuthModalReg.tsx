@@ -5,29 +5,21 @@ import {useInput} from "../../../hooks/useInput.ts";
 import {useState} from "react";
 import GlassNotify from "../Notify/GlassNotify.tsx";
 import {validateEmail, validatePassword} from "../../../hooks/validation.ts";
+import {signUp} from "../../../api/auth.ts";
+import {supabase} from "../../../supabase-client.ts";
+import {useModal} from "../../../hooks/useModal.ts";
 
 const AuthModalReg = () => {
     const name = useInput("");
     const email = useInput("");
     const password = useInput("");
 
-    const [notifyOpen, setNotifyOpen] = useState(false)
-    const [notifyMessage, setNotifyMessage] = useState('')
-    const [notifyType, setNotifyType] = useState<'success' | 'error'>('success')
+    const { notifyOpen, notifyMessage, notifyType, showModal } = useModal();
+
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
 
-    const showModal = (text: string, type: 'success' | 'error') => {
-        setNotifyOpen(false);
-
-        setTimeout(() => {
-            setNotifyMessage(text);
-            setNotifyType(type);
-            setNotifyOpen(true);
-        }, 10)
-    };
-
-
-    function handleSubmit(event: any) {
+    async function handleSubmit(event: any) {
         event.preventDefault()
 
         const emailValidateResult = validateEmail(email.value);
@@ -42,15 +34,35 @@ const AuthModalReg = () => {
             return;
         }
 
-        showModal('Регистрация успешна! 🎉', 'success');
+        setIsLoading(true);
 
-        setTimeout(() => {
-            name.value = "";
-            email.value = "";
-            password.value = "";
-        }, 1000);
+        try {
+            const result = await signUp(email.value, password.value, name.value)
+            console.log('📦 Результат signUp:', result);
+
+            if (result.error) {
+                showModal(result.error, 'error');
+            } else {
+                const user = result.user;
+                await supabase.from("profiles").insert({user})
+
+                showModal('Регистрация успешна. Проверьте почту ✅', 'success');
+
+                setTimeout(() => {
+                    name.value = "";
+                    email.value = "";
+                    password.value = "";
+                }, 1000);
+            }
+        } catch (error: any) {
+            console.log("Критическая ошибка");
+            showModal(error, 'error');
+        } finally {
+            setIsLoading(false);
+        }
+
+        console.log("IsLoading: ", isLoading);
     }
-
 
     return (
         <div>
