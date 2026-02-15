@@ -1,27 +1,24 @@
 import classes from './Button.module.css';
 import React from "react";
 
-interface buttonProps {
+type ButtonVariant = 'secondary' | 'primary';
+
+interface ButtonProps {
     children?: React.ReactNode;
-    ButtonStyleVariant: 'secondary' | 'primary';
+    variant: ButtonVariant;
 }
 
-const Button = ({children, ButtonStyleVariant}: buttonProps) => {
+const Button = ({children, variant}: ButtonProps) => {
 
-    function setStyles(styles: string) {
-        switch (styles) {
-            case 'primary':
-                return classes.btnPrimary;
-            case 'secondary':
-                return classes.btnSecondary ;
-
-                default:
-                    return '';
-        }
+    const variantStyles = {
+        primary: classes.btnPrimary,
+        secondary: classes.btnSecondary,
     }
 
+    const variantClass: string = variantStyles[variant];
+
     return (
-        <button className={`${classes.btn} ${setStyles(ButtonStyleVariant)}`}>
+        <button className={`${classes.btn} ${variantClass}`}>
             {children}
         </button>
     );

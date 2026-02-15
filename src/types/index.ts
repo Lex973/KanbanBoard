@@ -6,19 +6,20 @@ export interface IUser {
     email: string;
 }
 
+
+export type TaskStatus = 'todo' | 'in-progress' | 'done' | 'archive';
+export type Priority = 'low' | 'medium' | 'high';
+
 export interface ITask {
     id: number;
     title: string;
     time: Date;
-    status: 'todo' | 'in-progress' | 'done' | 'archive';
-    priority: 'low' | 'medium' | 'high';
+    status: TaskStatus;
+    priority: Priority;
     createdAt: Date;
 }
 
-export interface useInputProps {
+export interface UseInputReturn  {
     value: string;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
-
-export type TaskStatus = 'todo' | 'in-progress' | 'done' | 'archive';
-export type Priority = 'low' | 'medium' | 'high';

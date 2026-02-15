@@ -5,9 +5,10 @@ import AuthModalReg from "./AuthModalReg.tsx";
 
 const AuthModal = () => {
     const [mode, setMode] = useState<'log' | 'reg'>('log');
+    type AuthMode = 'log' | 'reg';
 
-    function resetMode(type: string) {
-        type === 'reg' ? setMode('reg') : setMode('log')
+    function switchMode(type: AuthMode) {
+        setMode(type);
     }
 
     return (
@@ -16,14 +17,14 @@ const AuthModal = () => {
                 <div className={classes.authTabs}>
                     <button
                         className={mode === 'log' ? `${classes.authBtn} ${classes.active}` : `${classes.authBtn}`}
-                        onClick={() => resetMode('log')}
+                        onClick={() => switchMode('log')}
                     >
                         Вход
                     </button>
 
                     <button
                         className={mode === 'reg' ? `${classes.authBtn} ${classes.active}` : `${classes.authBtn}`}
-                        onClick={() => resetMode('reg')}
+                        onClick={() => switchMode('reg')}
                     >
                         Регистрация
                     </button>
