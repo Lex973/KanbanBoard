@@ -2,53 +2,59 @@ import Input from "../../UI/Input.tsx";
 import classes from './authModal.module.css'
 import Button from "../../UI/Button.tsx";
 import {useInput} from "../../../hooks/useInput.ts";
-import type {UseInputReturn} from "../../../types";
+import {useState} from "react";
+import GlassNotify from "../Notify/GlassNotify.tsx";
+import {validateEmail, validatePassword} from "../../../hooks/validation.ts";
 
 const AuthModalReg = () => {
-    const name: UseInputReturn = useInput("");
-    const email: UseInputReturn = useInput("");
-    const password: UseInputReturn = useInput("");
+    const name = useInput("");
+    const email = useInput("");
+    const password = useInput("");
 
-    function validateEmail(email: string): boolean {
-        if (!email.includes('@') || !email.includes('.')) {
-            console.log("Отсутствуют обязательные знаки (@.)")
-            return false
-        }
-        return true
-    }
+    const [notifyOpen, setNotifyOpen] = useState(false)
+    const [notifyMessage, setNotifyMessage] = useState('')
+    const [notifyType, setNotifyType] = useState<'success' | 'error'>('success')
 
-    function validatePassword(password: string): boolean {
-        const value = password.trim()
 
-        if (value.length < 8) {
-            console.log('Минимум 8 символов')
-            return false;
-        }
+    const showModal = (text: string, type: 'success' | 'error') => {
+        setNotifyOpen(false);
 
-        if (!/[A-Za-z]/.test(value)) {
-            console.log('Добавьте хотя бы одну букву')
-            return false;
-        }
+        setTimeout(() => {
+            setNotifyMessage(text);
+            setNotifyType(type);
+            setNotifyOpen(true);
+        }, 10)
+    };
 
-        if (!/\d/.test(value)) {
-            console.log('Добавьте хотя бы одну цифру')
-            return false;
-        }
-
-        return true;
-    }
 
     function handleSubmit(event: any) {
         event.preventDefault()
 
-        if (validateEmail(email.value) && validatePassword(password.value)) {
-            console.log("Все хорошо")
+        const emailValidateResult = validateEmail(email.value);
+        if (!emailValidateResult.isValid) {
+            showModal(emailValidateResult.error!, 'error');
+            return;
         }
+
+        const passwordValidateResult = validatePassword(password.value);
+        if (!passwordValidateResult.isValid) {
+            showModal(passwordValidateResult.error!, 'error');
+            return;
+        }
+
+        showModal('Регистрация успешна! 🎉', 'success');
+
+        setTimeout(() => {
+            name.value = "";
+            email.value = "";
+            password.value = "";
+        }, 1000);
     }
 
 
     return (
         <div>
+
             <h1 className={classes['auth-log-title']}>Регистрация</h1>
             <p className={classes['auth-log-subtitle']}>Создайте аккаунт для начала работы</p>
 
@@ -62,6 +68,8 @@ const AuthModalReg = () => {
                     <Button variant="primary">Войти</Button>
                 </section>
             </form>
+
+            {notifyOpen && <GlassNotify open={notifyOpen} message={notifyMessage} type={notifyType}/>}
         </div>
     );
 };

@@ -1,5 +1,3 @@
-import type {ChangeEvent} from "react";
-
 export interface IUser {
     id: number;
     name: string;
@@ -17,9 +15,4 @@ export interface ITask {
     status: TaskStatus;
     priority: Priority;
     createdAt: Date;
-}
-
-export interface UseInputReturn  {
-    value: string;
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }

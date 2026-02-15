@@ -1,17 +1,15 @@
-
 import Input from "../../UI/Input.tsx";
 import classes from './authModal.module.css'
 import Button from "../../UI/Button.tsx";
 import {useInput} from "../../../hooks/useInput.ts";
-import type {UseInputReturn } from "../../../types";
 
 const AuthModalLog = () => {
-    const email: UseInputReturn  = useInput("");
-    const password: UseInputReturn  = useInput("");
+    const email= useInput("");
+    const password= useInput("");
 
     function handleSubmit(event: any) {
         event.preventDefault()
-    }       
+    }
 
     return (
         <div>
@@ -31,4 +29,4 @@ const AuthModalLog = () => {
     );
 };
 
-    export default AuthModalLog;
+export default AuthModalLog;
