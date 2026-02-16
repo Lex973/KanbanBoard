@@ -3,27 +3,16 @@ import classes from './authModal.module.css'
 import Button from "../../UI/Button.tsx";
 import {useInput} from "../../../hooks/useInput.ts";
 import {signIn} from "../../../api/auth.ts";
-import {useModal} from "../../../hooks/useModal.ts";
+import {useNotify} from "../../../hooks/useNotify.ts";
 import GlassNotify from "../Notify/GlassNotify.tsx";
-import {supabase} from "../../../supabase-client.ts";
-import {useEffect} from "react";
 
 const AuthModalLog = () => {
     const email= useInput("");
     const password= useInput("");
 
-    const { notifyOpen, notifyMessage, notifyType, showModal } = useModal();
+    const { notifyOpen, notifyMessage, notifyType, showModal } = useNotify();
 
-    useEffect(() => {
-        const currentSession = async () => {
-            const session = await supabase.auth.getSession()
-            const result = session.data;
-            return result;
-        }
-        console.log(currentSession());
-    }, [])
-
-    async function handleSubmit(event: any) {
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
         try {
@@ -51,9 +40,9 @@ const AuthModalLog = () => {
                 <Input type='text' value={email.value} onChange={email.onChange} label="email" placeholder="your@email.com"/>
                 <Input type='password' value={password.value} onChange={password.onChange} label="пароль" placeholder="Введите пароль"/>
 
-                <section className={classes['auth-btn-form']} onSubmit={handleSubmit}>
-                    <Button variant="secondary">Отмена</Button>
-                    <Button variant="primary">Войти</Button>
+                <section className={classes['auth-btn-form']}>
+                    <Button variant="secondary" type="button">Отмена</Button>
+                    <Button variant="primary" type="submit">Войти</Button>
                 </section>
             </form>
 

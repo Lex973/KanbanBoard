@@ -2,24 +2,19 @@ import Input from "../../UI/Input.tsx";
 import classes from './authModal.module.css'
 import Button from "../../UI/Button.tsx";
 import {useInput} from "../../../hooks/useInput.ts";
-import {useState} from "react";
 import GlassNotify from "../Notify/GlassNotify.tsx";
-import {validateEmail, validatePassword} from "../../../hooks/validation.ts";
-import {signUp} from "../../../api/auth.ts";
-import {supabase} from "../../../supabase-client.ts";
-import {useModal} from "../../../hooks/useModal.ts";
+import {validateEmail, validatePassword} from "../../../script/validation.ts";
+import {type CustomAuthResponse, signUp} from "../../../api/auth.ts";
+import {useNotify} from "../../../hooks/useNotify.ts";
 
 const AuthModalReg = () => {
     const name = useInput("");
     const email = useInput("");
     const password = useInput("");
 
-    const { notifyOpen, notifyMessage, notifyType, showModal } = useModal();
+    const { notifyOpen, notifyMessage, notifyType, showModal } = useNotify();
 
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-
-
-    async function handleSubmit(event: any) {
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
         const emailValidateResult = validateEmail(email.value);
@@ -34,34 +29,25 @@ const AuthModalReg = () => {
             return;
         }
 
-        setIsLoading(true);
-
         try {
-            const result = await signUp(email.value, password.value, name.value)
+            const result: CustomAuthResponse = await signUp(email.value, password.value, name.value)
             console.log('📦 Результат signUp:', result);
 
             if (result.error) {
                 showModal(result.error, 'error');
             } else {
-                const user = result.user;
-                await supabase.from("profiles").insert({user})
-
                 showModal('Регистрация успешна. Проверьте почту ✅', 'success');
 
                 setTimeout(() => {
-                    name.value = "";
-                    email.value = "";
-                    password.value = "";
-                }, 1000);
+                    name.reset()
+                    email.reset()
+                    password.reset()
+                }, 500);
             }
         } catch (error: any) {
             console.log("Критическая ошибка");
             showModal(error, 'error');
-        } finally {
-            setIsLoading(false);
         }
-
-        console.log("IsLoading: ", isLoading);
     }
 
     return (
@@ -76,8 +62,8 @@ const AuthModalReg = () => {
                 <Input type='password' value={password.value} onChange={password.onChange} label="пароль" placeholder="Минимум 8 символов"/>
 
                 <section className={classes['auth-btn-form']}>
-                    <Button variant="secondary">Отмена</Button>
-                    <Button variant="primary">Войти</Button>
+                    <Button variant="secondary" type="button">Отмена</Button>
+                    <Button variant="primary" type="submit">Регистрация</Button>
                 </section>
             </form>
 

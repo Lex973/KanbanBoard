@@ -4,8 +4,8 @@ import {useState} from "react";
 import AuthModalReg from "./AuthModalReg.tsx";
 
 const AuthModal = () => {
-    const [mode, setMode] = useState<'log' | 'reg'>('log');
     type AuthMode = 'log' | 'reg';
+    const [mode, setMode] = useState<'log' | 'reg'>('log');
 
     function switchMode(type: AuthMode) {
         setMode(type);

@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export const useModal = () => {
+export const useNotify = () => {
     const [notifyOpen, setNotifyOpen] = useState(false)
     const [notifyMessage, setNotifyMessage] = useState('')
     const [notifyType, setNotifyType] = useState<'success' | 'error'>('success')

@@ -24,6 +24,7 @@ export const signUp = async (email: string, password: string, name: string): Pro
         console.log('🔵 Ответ Supabase:', { data, error });
 
         if (error) {
+            console.log(error)
             return {user: null, error: "Ошибка регистрации"};
         }
 
@@ -70,5 +71,17 @@ export const signIn = async (email: string, password: string): Promise<CustomAut
             isSuccess: false,
             error: error,
         }
+    }
+}
+
+export const isAuthenticated = async (): Promise<boolean> => {
+    try {
+        const {data} = await supabase.auth.getSession();
+        console.log(data)
+        return !!data.session;
+    }
+    catch (error) {
+        console.log("Session Error: ", error);
+        return false;
     }
 }
