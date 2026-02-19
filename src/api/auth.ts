@@ -55,17 +55,17 @@ export const signIn = async (email: string, password: string): Promise<CustomAut
         const {data, error} = await supabase.auth.signInWithPassword({email, password});
 
         if (error) {
-            return {isSuccess: false, error: 'Пароль неверный'};
+            return { isSuccess: false, error: 'Пароль неверный' };
         }
 
         if (!data.user) {
-            return {isSuccess: false, error: 'Не удалось создать пользователя'};
+            return { isSuccess: false, error: 'Не удалось создать пользователя' };
         }
 
         return { isSuccess: true, error: null }
     }
     catch (error: any) {
-        console.log("Sign In Error: ", error);
+        console.log("Ошибка входа: ", error);
 
         return {
             isSuccess: false,
@@ -81,7 +81,18 @@ export const isAuthenticated = async (): Promise<boolean> => {
         return !!data.session;
     }
     catch (error) {
-        console.log("Session Error: ", error);
+        console.log("Ошибка сессии: ", error);
+        return false;
+    }
+}
+
+export const isLogOut = async (): Promise<boolean> => {
+    try {
+        await supabase.auth.signOut();
+        return true;
+    }
+    catch (error) {
+        console.error("Ошибка выхода из системы: ", error);
         return false;
     }
 }

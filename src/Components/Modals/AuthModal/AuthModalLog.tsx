@@ -5,6 +5,8 @@ import {useInput} from "../../../hooks/useInput.ts";
 import {signIn} from "../../../api/auth.ts";
 import {useNotify} from "../../../hooks/useNotify.ts";
 import GlassNotify from "../Notify/GlassNotify.tsx";
+import Loading from "../Loading/Loading.tsx";
+import {useState} from "react";
 
 const AuthModalLog = () => {
     const email= useInput("");
@@ -12,8 +14,12 @@ const AuthModalLog = () => {
 
     const { notifyOpen, notifyMessage, notifyType, showModal } = useNotify();
 
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    const [loading, setLoading] = useState<boolean>(false);
+
+    async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault()
+
+        setLoading(true);
 
         try {
             const result = await signIn(email.value, password.value);
@@ -21,18 +27,40 @@ const AuthModalLog = () => {
 
             if (!result.isSuccess) {
                 showModal(result.error ?? 'Неизвестная ошибка', 'error')
+
+                // Для красоты
+                setTimeout(() => {
+                    setLoading(false);
+                }, 500)
+
                 return
             }
 
             showModal('Успешный вход! ✅', 'success');
+
+            // Для красоты
+            setTimeout(() => {
+                setLoading(false);
+            }, 500)
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500)
         }
         catch (error: any) {
             showModal(error, 'error');
+
+            // Для красоты
+            setTimeout(() => {
+                setLoading(false);
+            }, 500)
+
         }
     }
 
     return (
-        <div>
+        <div className={classes.authModalContainer}>
+            {loading ? <Loading/> : null}
             <h1 className={classes['auth-log-title']}>Вход в систему</h1>
             <p className={classes['auth-log-subtitle']}>Войдите для доступа к вашим задачам</p>
 

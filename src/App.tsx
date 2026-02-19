@@ -1,6 +1,6 @@
 import './App.css'
 import './fonts/fonts.css'
-import AuthModal from "./Components/Modals/authModal/AuthModal.tsx";
+import AuthModal from "./Components/Modals/AuthModal/AuthModal.tsx";
 import {isAuthenticated} from "./api/auth.ts";
 import {useEffect, useState} from "react";
 import Test from "./Components/test.tsx";
@@ -17,6 +17,7 @@ function App() {
 
         checkAuth()
     }, [])
+
     console.log(auth);
 
     return (

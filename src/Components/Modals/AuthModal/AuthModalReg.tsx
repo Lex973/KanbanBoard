@@ -6,6 +6,8 @@ import GlassNotify from "../Notify/GlassNotify.tsx";
 import {validateEmail, validatePassword} from "../../../script/validation.ts";
 import {type CustomAuthResponse, signUp} from "../../../api/auth.ts";
 import {useNotify} from "../../../hooks/useNotify.ts";
+import {useState} from "react";
+import Loading from "../Loading/Loading.tsx";
 
 const AuthModalReg = () => {
     const name = useInput("");
@@ -14,18 +16,34 @@ const AuthModalReg = () => {
 
     const { notifyOpen, notifyMessage, notifyType, showModal } = useNotify();
 
+    const [loading, setLoading] = useState<boolean>(false);
+
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
+
+        setLoading(true);
 
         const emailValidateResult = validateEmail(email.value);
         if (!emailValidateResult.isValid) {
             showModal(emailValidateResult.error!, 'error');
+
+            // Для красоты
+            setTimeout(() => {
+                setLoading(false);
+            }, 500)
+
             return;
         }
 
         const passwordValidateResult = validatePassword(password.value);
         if (!passwordValidateResult.isValid) {
             showModal(passwordValidateResult.error!, 'error');
+
+            // Для красоты
+            setTimeout(() => {
+                setLoading(false);
+            }, 500)
+
             return;
         }
 
@@ -35,8 +53,16 @@ const AuthModalReg = () => {
 
             if (result.error) {
                 showModal(result.error, 'error');
+
+                // Для красоты
+                setTimeout(() => {
+                    setLoading(false);
+                }, 500)
+
             } else {
                 showModal('Регистрация успешна. Проверьте почту ✅', 'success');
+
+                setLoading(false);
 
                 setTimeout(() => {
                     name.reset()
@@ -46,13 +72,19 @@ const AuthModalReg = () => {
             }
         } catch (error: any) {
             console.log("Критическая ошибка");
+
+            // Для красоты
+            setTimeout(() => {
+                setLoading(false);
+            }, 500)
+
             showModal(error, 'error');
         }
     }
 
     return (
         <div>
-
+            {loading ? <Loading/> : null}
             <h1 className={classes['auth-log-title']}>Регистрация</h1>
             <p className={classes['auth-log-subtitle']}>Создайте аккаунт для начала работы</p>
 
