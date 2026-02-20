@@ -21,8 +21,6 @@ export const signUp = async (email: string, password: string, name: string): Pro
     try {
         const {data, error} = await supabase.auth.signUp({email, password});
 
-        console.log('🔵 Ответ Supabase:', { data, error });
-
         if (error) {
             console.log(error)
             return {user: null, error: "Ошибка регистрации"};
@@ -77,7 +75,6 @@ export const signIn = async (email: string, password: string): Promise<CustomAut
 export const isAuthenticated = async (): Promise<boolean> => {
     try {
         const {data} = await supabase.auth.getSession();
-        console.log(data)
         return !!data.session;
     }
     catch (error) {
@@ -86,7 +83,7 @@ export const isAuthenticated = async (): Promise<boolean> => {
     }
 }
 
-export const isLogOut = async (): Promise<boolean> => {
+export const logOut = async (): Promise<boolean> => {
     try {
         await supabase.auth.signOut();
         return true;

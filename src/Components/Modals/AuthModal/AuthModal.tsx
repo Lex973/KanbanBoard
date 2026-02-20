@@ -1,15 +1,14 @@
 import classes from './authModal.module.css'
 import AuthModalLog from "./AuthModalLog.tsx";
-import {useState} from "react";
+import {type Dispatch, type SetStateAction, useState} from "react";
 import AuthModalReg from "./AuthModalReg.tsx";
 
-const AuthModal = () => {
-    type AuthMode = 'log' | 'reg';
-    const [mode, setMode] = useState<'log' | 'reg'>('log');
+interface AuthModalProps {
+    setAuth: Dispatch<SetStateAction<boolean | null>>;
+}
 
-    function switchMode(type: AuthMode) {
-        setMode(type);
-    }
+const AuthModal = ({setAuth}: AuthModalProps) => {
+    const [mode, setMode] = useState<'log' | 'reg'>('log');
 
     return (
         <div className={classes['modal-auth-overlay']}>
@@ -17,21 +16,21 @@ const AuthModal = () => {
                 <div className={classes.authTabs}>
                     <button
                         className={mode === 'log' ? `${classes.authBtn} ${classes.active}` : `${classes.authBtn}`}
-                        onClick={() => switchMode('log')}
+                        onClick={() => setMode('log')}
                     >
                         Вход
                     </button>
 
                     <button
                         className={mode === 'reg' ? `${classes.authBtn} ${classes.active}` : `${classes.authBtn}`}
-                        onClick={() => switchMode('reg')}
+                        onClick={() => setMode('reg')}
                     >
                         Регистрация
                     </button>
                 </div>
 
                <section>
-                   {mode === 'reg' ? <AuthModalReg/> : <AuthModalLog/>}
+                   {mode === 'reg' ? <AuthModalReg/> : <AuthModalLog setAuth={setAuth}/>}
                </section>
            </div>
         </div>

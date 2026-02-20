@@ -1,84 +1,51 @@
-import Input from "../../UI/Input.tsx";
+import Input from "../../UI/Input/Input.tsx";
 import classes from './authModal.module.css'
-import Button from "../../UI/Button.tsx";
+import Button from "../../UI/Button/Button.tsx";
 import {useInput} from "../../../hooks/useInput.ts";
 import GlassNotify from "../Notify/GlassNotify.tsx";
 import {validateEmail, validatePassword} from "../../../script/validation.ts";
 import {type CustomAuthResponse, signUp} from "../../../api/auth.ts";
-import {useNotify} from "../../../hooks/useNotify.ts";
-import {useState} from "react";
 import Loading from "../Loading/Loading.tsx";
+import {useFormState} from "../../../hooks/useFormState.ts";
 
 const AuthModalReg = () => {
     const name = useInput("");
     const email = useInput("");
     const password = useInput("");
 
-    const { notifyOpen, notifyMessage, notifyType, showModal } = useNotify();
-
-    const [loading, setLoading] = useState<boolean>(false);
+    const { loading, setLoading, handleError, handleSuccess, notifyOpen, notifyMessage, notifyType } = useFormState()
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
-
         setLoading(true);
 
         const emailValidateResult = validateEmail(email.value);
         if (!emailValidateResult.isValid) {
-            showModal(emailValidateResult.error!, 'error');
-
-            // Для красоты
-            setTimeout(() => {
-                setLoading(false);
-            }, 500)
-
-            return;
+            handleError(emailValidateResult.error ?? 'Ошибка валидации email')
+            return
         }
 
         const passwordValidateResult = validatePassword(password.value);
         if (!passwordValidateResult.isValid) {
-            showModal(passwordValidateResult.error!, 'error');
-
-            // Для красоты
-            setTimeout(() => {
-                setLoading(false);
-            }, 500)
-
+            handleError(passwordValidateResult.error ?? 'Ошибка валидации password')
             return;
         }
 
         try {
             const result: CustomAuthResponse = await signUp(email.value, password.value, name.value)
-            console.log('📦 Результат signUp:', result);
 
             if (result.error) {
-                showModal(result.error, 'error');
-
-                // Для красоты
-                setTimeout(() => {
-                    setLoading(false);
-                }, 500)
-
+                handleError(result.error)
             } else {
-                showModal('Регистрация успешна. Проверьте почту ✅', 'success');
-
-                setLoading(false);
-
+                handleSuccess('Регистрация успешна. Проверьте почту ✅')
                 setTimeout(() => {
                     name.reset()
                     email.reset()
                     password.reset()
                 }, 500);
             }
-        } catch (error: any) {
-            console.log("Критическая ошибка");
-
-            // Для красоты
-            setTimeout(() => {
-                setLoading(false);
-            }, 500)
-
-            showModal(error, 'error');
+        } catch (error: unknown) {
+            handleError(error)
         }
     }
 

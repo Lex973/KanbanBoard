@@ -3,7 +3,8 @@ import './fonts/fonts.css'
 import AuthModal from "./Components/Modals/AuthModal/AuthModal.tsx";
 import {isAuthenticated} from "./api/auth.ts";
 import {useEffect, useState} from "react";
-import Test from "./Components/test.tsx";
+import Loading from "./Components/Modals/Loading/Loading.tsx";
+import Sidebar from "./Components/Layout/Sidebar.tsx";
 
 function App() {
     const [auth, setAuth] = useState<boolean | null>(null);
@@ -18,11 +19,11 @@ function App() {
         checkAuth()
     }, [])
 
-    console.log(auth);
-
     return (
     <>
-        {auth ? <Test/> : <AuthModal/>}
+        {auth === null && <Loading />}
+        {auth === true && <Sidebar/>}
+        {auth === false && <AuthModal setAuth={setAuth} />}
     </>
   )
 }

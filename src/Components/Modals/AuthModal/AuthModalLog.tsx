@@ -1,60 +1,49 @@
-import Input from "../../UI/Input.tsx";
+import Input from "../../UI/Input/Input.tsx";
 import classes from './authModal.module.css'
-import Button from "../../UI/Button.tsx";
+import Button from "../../UI/Button/Button.tsx";
 import {useInput} from "../../../hooks/useInput.ts";
 import {signIn} from "../../../api/auth.ts";
-import {useNotify} from "../../../hooks/useNotify.ts";
 import GlassNotify from "../Notify/GlassNotify.tsx";
 import Loading from "../Loading/Loading.tsx";
-import {useState} from "react";
+import {type Dispatch, type SetStateAction, } from "react";
+import {useFormState} from "../../../hooks/useFormState.ts";
 
-const AuthModalLog = () => {
+interface AuthModalLogProps {
+    setAuth: Dispatch<SetStateAction<boolean | null>>;
+}
+
+const AuthModalLog = ({setAuth}: AuthModalLogProps) => {
     const email= useInput("");
     const password= useInput("");
+    const { loading, setLoading, handleError, handleSuccess, notifyOpen, notifyMessage, notifyType } = useFormState()
 
-    const { notifyOpen, notifyMessage, notifyType, showModal } = useNotify();
-
-    const [loading, setLoading] = useState<boolean>(false);
-
-    async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
         setLoading(true);
 
         try {
             const result = await signIn(email.value, password.value);
-            console.log('📦 Результат signIn:', result);
 
             if (!result.isSuccess) {
-                showModal(result.error ?? 'Неизвестная ошибка', 'error')
-
-                // Для красоты
-                setTimeout(() => {
-                    setLoading(false);
-                }, 500)
-
+                handleError(result.error ?? 'Неизвестная ошибка')
                 return
             }
 
-            showModal('Успешный вход! ✅', 'success');
-
-            // Для красоты
-            setTimeout(() => {
-                setLoading(false);
-            }, 500)
+            handleSuccess('Успешный вход! ✅')
 
             setTimeout(() => {
-                window.location.reload();
-            }, 1500)
+                setAuth(true);
+            }, 1000)
         }
-        catch (error: any) {
-            showModal(error, 'error');
-
+        catch (error: unknown) {
+            handleError(error)
+        }
+        finally {
             // Для красоты
             setTimeout(() => {
                 setLoading(false);
             }, 500)
-
         }
     }
 
