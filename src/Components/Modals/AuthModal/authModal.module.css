@@ -11,6 +11,7 @@
     overflow: auto;
 }
 .modalAuth {
+    position: relative;
     width: 550px;
     border-radius: 16px;
     padding: 28px;

@@ -3,8 +3,8 @@ import classes from './authModal.module.css'
 import Button from "../../UI/Button/Button.tsx";
 import {useInput} from "../../../hooks/useInput.ts";
 import GlassNotify from "../Notify/GlassNotify.tsx";
-import {validateEmail, validatePassword} from "../../../script/validation.ts";
-import {type CustomAuthResponse, signUp} from "../../../api/auth.ts";
+import {validateEmail, validatePassword} from "../../../utils/validation.ts";
+import {type CustomAuthResponseSignUp, signUp} from "../../../api/auth.ts";
 import Loading from "../Loading/Loading.tsx";
 import {useFormState} from "../../../hooks/useFormState.ts";
 
@@ -32,7 +32,7 @@ const AuthModalReg = () => {
         }
 
         try {
-            const result: CustomAuthResponse = await signUp(email.value, password.value, name.value)
+            const result: CustomAuthResponseSignUp = await signUp(email.value, password.value, name.value)
 
             if (result.error) {
                 handleError(result.error)

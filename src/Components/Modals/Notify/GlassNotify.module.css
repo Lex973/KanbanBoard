@@ -8,12 +8,11 @@
 }
 
 .card {
-    position: relative;
     overflow: hidden;
     min-width: 280px;
     max-width: 340px;
     padding: 12px 18px;
-    border-radius: 18px;
+    border-radius: 7px;
     background:
             linear-gradient(
                     135deg,
@@ -24,7 +23,7 @@
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid rgba(52, 211, 153, 0.35);
     box-shadow:
-            0 20px 40px rgba(16,185,129,0.25),
+            0 5px 3px rgba(16,185,129,0.25),
             inset 0 0 0 1px rgba(255,255,255,0.06);
 }
 
@@ -42,7 +41,6 @@
 }
 
 .content {
-    position: relative;
     z-index: 1;
 }
 
@@ -68,11 +66,9 @@
                     rgba(239,68,68,0.18),
                     rgba(244,63,94,0.08)
             );
-
     border: 1px solid rgba(248,113,113,0.35);
-
     box-shadow:
-            0 20px 40px rgba(239,68,68,0.25),
+            0 5px 3px rgba(239,68,68,0.25),
             inset 0 0 0 1px rgba(255,255,255,0.06);
 }
 

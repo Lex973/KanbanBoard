@@ -1,0 +1,32 @@
+.sidebar {
+    width: 250px;
+    background: rgba(26, 31, 38, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-right: 1px solid #2f363D;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    box-shadow: var(--shadowSM);
+    transition: all 0.3s ease;
+}
+.logo {
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: var(--bgTertiary);
+    border-radius: 12px;
+    color: var(--avocadoMain);
+    font-weight: 700;
+    border: 1px solid #2f363D;
+    transition: all 0.3s ease;
+    font-family: 'Inter Regular', sans-serif;
+    letter-spacing: 2px;
+}

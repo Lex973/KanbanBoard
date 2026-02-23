@@ -13,11 +13,13 @@ const Input = ({label, placeholder, value, type, onChange}: InputProps) => {
     return (
         <div>
             <label
+                htmlFor={label}
                 className={classes.label}
             >{label}
             </label>
 
             <input
+                id={label}
                 value={value}
                 onChange={onChange}
                 type={type}

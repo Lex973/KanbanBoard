@@ -1,3 +1,5 @@
+import type {User} from "@supabase/supabase-js";
+
 export interface IUser {
     id: string;
     email: string;
@@ -16,4 +18,11 @@ export interface ITask {
     status: TaskStatus;
     priority: Priority;
     createdAt: Date;
+}
+
+export interface CustomAuthResponseUserInfo{
+    user: User | null;
+    email: string | null;
+    name: string | null;
+    error: string | null;
 }

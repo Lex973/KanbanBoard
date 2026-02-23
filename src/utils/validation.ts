@@ -3,8 +3,9 @@ interface validateProps {
     error?: string
 }
 export const validateEmail = (email: string): validateProps => {
-    if (!email.includes('@') || !email.includes('.')) {
-        return { isValid: false, error: 'Отсутствуют обязательные знаки в email (@.)' };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return { isValid: false, error: 'Некорректный email' };
     }
     return { isValid: true };
 }

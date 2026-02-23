@@ -1,11 +1,12 @@
 import {supabase} from "../supabase-client.ts";
+import type {PostgrestSingleResponse} from "@supabase/supabase-js";
 
-export interface CustomAuthResponse {
+export interface CustomAuthResponseSignUp {
     user: {
-        id: string;
+        id: string | undefined;
         email: string;
         name: string;
-        createdAt: string;
+        createdAt: string | undefined;
     } | null;
 
     error: string | null;
@@ -17,7 +18,7 @@ interface CustomAuthResponseSignIn {
 }
 
 
-export const signUp = async (email: string, password: string, name: string): Promise<CustomAuthResponse> => {
+export const signUp = async (email: string, password: string, name: string): Promise<CustomAuthResponseSignUp> => {
     try {
         const {data, error} = await supabase.auth.signUp({email, password});
 
@@ -26,24 +27,29 @@ export const signUp = async (email: string, password: string, name: string): Pro
             return {user: null, error: "Ошибка регистрации"};
         }
 
-        if (!data.user) {
-            return {user: null, error: 'Не удалось создать пользователя'};
+        const signUpUser: PostgrestSingleResponse<null> = await supabase.from('profiles').insert({id: data.user?.id, email: email, name: name});
+
+        if (signUpUser.error) {
+            console.log("Ошибка: ", signUpUser.error)
+            return { user: null, error: 'Ошибка сохранения профиля' };
         }
 
         const user = {
-            id: data.user.id,
-            email: data.user.email ?? '',
+            id: data.user?.id,
+            email: data.user?.email ?? '',
             name: name,
-            createdAt: data.user.created_at
+            createdAt: data.user?.created_at
         }
 
         return { user, error: null }
     }
-    catch (error: any) {
-        console.log("Sign Up Error: ", error);
+    catch (error) {
+        let errorMessage = '';
+        error instanceof Error ? errorMessage = error.message : errorMessage = String(error);
+
         return {
             user: null,
-            error: error,
+            error: errorMessage,
         }
     }
 }
@@ -53,7 +59,7 @@ export const signIn = async (email: string, password: string): Promise<CustomAut
         const {data, error} = await supabase.auth.signInWithPassword({email, password});
 
         if (error) {
-            return { isSuccess: false, error: 'Пароль неверный' };
+            return { isSuccess: false, error: 'Неверный email или пароль' };
         }
 
         if (!data.user) {
@@ -62,12 +68,13 @@ export const signIn = async (email: string, password: string): Promise<CustomAut
 
         return { isSuccess: true, error: null }
     }
-    catch (error: any) {
-        console.log("Ошибка входа: ", error);
+    catch (error) {
+        let errorMessage = '';
+        error instanceof Error ? errorMessage = error.message : errorMessage = String(error);
 
         return {
             isSuccess: false,
-            error: error,
+            error: errorMessage,
         }
     }
 }

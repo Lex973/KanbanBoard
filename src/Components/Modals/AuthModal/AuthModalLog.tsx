@@ -7,6 +7,7 @@ import GlassNotify from "../Notify/GlassNotify.tsx";
 import Loading from "../Loading/Loading.tsx";
 import {type Dispatch, type SetStateAction, } from "react";
 import {useFormState} from "../../../hooks/useFormState.ts";
+import {createPortal} from "react-dom";
 
 interface AuthModalLogProps {
     setAuth: Dispatch<SetStateAction<boolean | null>>;
@@ -32,9 +33,7 @@ const AuthModalLog = ({setAuth}: AuthModalLogProps) => {
 
             handleSuccess('Успешный вход! ✅')
 
-            setTimeout(() => {
-                setAuth(true);
-            }, 1000)
+            setAuth(true);
         }
         catch (error: unknown) {
             handleError(error)
@@ -48,22 +47,27 @@ const AuthModalLog = ({setAuth}: AuthModalLogProps) => {
     }
 
     return (
-        <div className={classes.authModalContainer}>
-            {loading ? <Loading/> : null}
-            <h1 className={classes['auth-log-title']}>Вход в систему</h1>
-            <p className={classes['auth-log-subtitle']}>Войдите для доступа к вашим задачам</p>
+        <div>
+            <div>
+                {loading ? <Loading/> : null}
+                <h1 className={classes['auth-log-title']}>Вход в систему</h1>
+                <p className={classes['auth-log-subtitle']}>Войдите для доступа к вашим задачам</p>
 
-            <form className={classes['auth-log-form']} onSubmit={(event) => handleSubmit(event)}>
-                <Input type='text' value={email.value} onChange={email.onChange} label="email" placeholder="your@email.com"/>
-                <Input type='password' value={password.value} onChange={password.onChange} label="пароль" placeholder="Введите пароль"/>
+                <form className={classes['auth-log-form']} onSubmit={(event) => handleSubmit(event)}>
+                    <Input type='text' value={email.value} onChange={email.onChange} label="email" placeholder="your@email.com"/>
+                    <Input type='password' value={password.value} onChange={password.onChange} label="пароль" placeholder="Введите пароль"/>
 
-                <section className={classes['auth-btn-form']}>
-                    <Button variant="secondary" type="button">Отмена</Button>
-                    <Button variant="primary" type="submit">Войти</Button>
-                </section>
-            </form>
+                    <section className={classes['auth-btn-form']}>
+                        <Button variant="secondary" type="button">Отмена</Button>
+                        <Button variant="primary" type="submit">Войти</Button>
+                    </section>
+                </form>
+            </div>
 
-            {notifyOpen && <GlassNotify open={notifyOpen} message={notifyMessage} type={notifyType}/>}
+            {notifyOpen && createPortal(
+                <GlassNotify open={notifyOpen} message={notifyMessage} type={notifyType}/>,
+                document.body
+            )}
         </div>
     );
 };

@@ -21,13 +21,6 @@ const GlassNotify = ({open, title, message, type, duration = 3000}: GlassNotifyP
             }, 10);
 
             return () => clearTimeout(showTimer);
-        } else {
-            setIsVisible(false);
-            const hideTimer = setTimeout(() => {
-                setShouldRender(false);
-            }, 300);
-
-            return () => clearTimeout(hideTimer);
         }
     }, [open]);
 
@@ -37,7 +30,7 @@ const GlassNotify = ({open, title, message, type, duration = 3000}: GlassNotifyP
                 setIsVisible(false);
                 setTimeout(() => {
                     setShouldRender(false);
-                }, 3000);
+                }, 300);
             }, duration);
 
             return () => clearTimeout(autoCloseTimer);
