@@ -7,6 +7,7 @@ import {validateEmail, validatePassword} from "../../../utils/validation.ts";
 import {type CustomAuthResponseSignUp, signUp} from "../../../api/auth.ts";
 import Loading from "../Loading/Loading.tsx";
 import {useFormState} from "../../../hooks/useFormState.ts";
+import {createPortal} from "react-dom";
 
 const AuthModalReg = () => {
     const name = useInput("");
@@ -51,7 +52,7 @@ const AuthModalReg = () => {
 
     return (
         <div>
-            {loading ? <Loading/> : null}
+            {loading ? createPortal(<Loading/>, document.body) : null}
             <h1 className={classes['auth-log-title']}>Регистрация</h1>
             <p className={classes['auth-log-subtitle']}>Создайте аккаунт для начала работы</p>
 

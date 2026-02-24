@@ -27,8 +27,7 @@ export async function getUserData(): Promise<CustomAuthResponseUserInfo> {
     } catch (error: unknown) {
         let errorMessage = 'Error';
 
-        error instanceof Error ? errorMessage = error.message : String(error);
-
+        errorMessage = error instanceof Error ? error.message : String(error);
         return {
             user: null,
             email: null,

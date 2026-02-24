@@ -1,22 +1,18 @@
 import classes from './Sidebar.module.css';
 import UserProfile from "./SideBarComponents/UserProfile.tsx";
 import {motion} from "framer-motion";
-import {getUserData} from "../../../api/data.ts";
-import type {CustomAuthResponseUserInfo} from "../../../types";
-import {type Dispatch, type SetStateAction, useEffect, useState} from "react";
+import {type Dispatch, type SetStateAction} from "react";
 import {logOut} from "../../../api/auth.ts";
-import Loading from "../../Modals/Loading/Loading.tsx";
-import {useFormState} from "../../../hooks/useFormState.ts";
-import GlassNotify from "../../Modals/Notify/GlassNotify.tsx";
 import Time from "./SideBarComponents/Time.tsx";
 import Navigation from "./SideBarComponents/Navigation.tsx";
+import type {CustomAuthResponseUserInfo} from "../../../types";
 
 interface SidebarProps {
     setAuth: Dispatch<SetStateAction<boolean | null>>;
+    userData: CustomAuthResponseUserInfo | null;
 }
 
-const Sidebar = ({setAuth}: SidebarProps) => {
-    const { handleError, handleSuccess, notifyOpen, notifyMessage, notifyType } = useFormState()
+const Sidebar = ({setAuth, userData}: SidebarProps) => {
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -36,39 +32,14 @@ const Sidebar = ({setAuth}: SidebarProps) => {
     }
 
 
-    const [userData, setUserData] = useState<CustomAuthResponseUserInfo | null>(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const data = await getUserData();
-
-                if (data.error) {
-                    handleError(data.error);
-                } else {
-                    handleSuccess("Вы успешно вошли в систему")
-                }
-
-                setUserData(data);
-            } catch (err) {
-                handleError(err);
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchUserData()
-    }, []);
 
     async function test() {
-        setLoading(true);
         await logOut()
         setAuth(false);
     }
 
     return (
-        <div>
-            {loading ? <Loading/> : (
+        <section className={classes.sidebarContainer}>
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
@@ -95,10 +66,9 @@ const Sidebar = ({setAuth}: SidebarProps) => {
                             <button onClick={test}>Выйти</button>
                         </motion.div>
                     </aside>
-                    {notifyOpen && <GlassNotify open={notifyOpen} message={notifyMessage} type={notifyType}/>}
+
                 </motion.div>
-            )}
-        </div>
+        </section>
     );
 };
 

@@ -49,7 +49,7 @@ const AuthModalLog = ({setAuth}: AuthModalLogProps) => {
     return (
         <div>
             <div>
-                {loading ? <Loading/> : null}
+                {loading ? createPortal(<Loading/>, document.body) : null}
                 <h1 className={classes['auth-log-title']}>Вход в систему</h1>
                 <p className={classes['auth-log-subtitle']}>Войдите для доступа к вашим задачам</p>
 

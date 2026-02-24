@@ -19,9 +19,11 @@ const Time = () => {
     const formattedMinutes = `${minutes}`;
 
     useEffect(() => {
-        setInterval(() => {
+        const dateInterval = setInterval(() => {
             setTime(new Date());
         }, 1000);
+
+        return () => clearInterval(dateInterval)
     }, []);
 
     return (
