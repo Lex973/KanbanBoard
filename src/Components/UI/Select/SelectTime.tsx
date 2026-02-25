@@ -3,20 +3,17 @@ import type {Priority} from "../../../types";
 import {useState, useRef, useEffect} from "react";
 
 interface SelectProps {
-    onFilter: (filter: Priority) => void;
     value: Priority;
 }
 
 const options = [
-    { value: 'all', label: 'Все приоритеты',color: '#6e7782' },
-    { value: 'high', label: 'Высокий', color: '#FF6B6B' },
-    { value: 'medium', label: 'Средний', color: '#FFB84D' },
-    { value: 'low', label: 'Низкий', color: '#7CFF6B' },
+    { value: 'none', label: 'Без сортировки',color: '#6e7782' },
+    { value: 'timeUp', label: 'По времени ↑', color: '#FF6B6B' },
+    { value: 'timeDown', label: 'По времени ↓', color: '#FFB84D' },
 ];
 
-const Select = ({onFilter, value}: SelectProps) => {
-    const [open, setOpen] = useState(false);
-
+const Select = ({value}: SelectProps) => {
+    const [openTime, setOpenTime] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
     const current = options.find(o => o.value === value) ?? options[0];
@@ -24,43 +21,41 @@ const Select = ({onFilter, value}: SelectProps) => {
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (ref.current && !ref.current.contains(e.target as Node)) {
-                setOpen(false);
+                setOpenTime(false);
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    function handleSelect(val: string) {
-        onFilter(val as Priority);
-        setOpen(false);
+    function handleSelect() {
+        setOpenTime(false);
     }
-
     return (
         <div className={classes.wrapper} ref={ref}>
             <button
-                className={`${classes.trigger} ${open ? classes.triggerOpen : ''}`}
-                onClick={() => setOpen(prev => !prev)}
+                className={`${classes.trigger} ${openTime ? classes.triggerOpen : ''}`}
+                onClick={() => setOpenTime(prev => !prev)}
                 type="button"
             >
                 <span className={classes.dot} style={{background: current.color}}/>
                 <span className={classes.label}>{current.label}</span>
                 <svg
-                    className={`${classes.arrow} ${open ? classes.arrowOpen : ''}`}
+                    className={`${classes.arrow} ${openTime ? classes.arrowOpen : ''}`}
                     width="12" height="12" viewBox="0 0 12 12" fill="none"
                 >
                     <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
             </button>
 
-            {open && (
+            {openTime && (
                 <div className={classes.dropdown}>
                     {options.map(opt => (
                         <button
                             key={opt.value}
                             type="button"
                             className={`${classes.option} ${opt.value === value ? classes.optionActive : ''}`}
-                            onClick={() => handleSelect(opt.value)}
+                            onClick={() => handleSelect()}
                         >
                             <span className={classes.dot} style={{background: opt.color}}/>
                             <span>{opt.label}</span>

@@ -16,6 +16,7 @@ const GlassNotify = ({open, title, message, type, duration = 3000}: GlassNotifyP
     useEffect(() => {
         if (open) {
             setShouldRender(true);
+
             const showTimer = setTimeout(() => {
                 setIsVisible(true);
             }, 10);
@@ -28,6 +29,7 @@ const GlassNotify = ({open, title, message, type, duration = 3000}: GlassNotifyP
         if (open && shouldRender) {
             const autoCloseTimer = setTimeout(() => {
                 setIsVisible(false);
+
                 setTimeout(() => {
                     setShouldRender(false);
                 }, 300);

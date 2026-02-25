@@ -67,7 +67,7 @@
 .dateColon {
     color: var(--textPrimary);
     font-size: 30px;
-    animation: pulseСolon 2s infinite steps(2);
+    animation: pulseСolon 1.6s infinite steps(2);
     height: 31px;
     display: flex;
     justify-content: center;
@@ -88,7 +88,7 @@
 .navSection {
     display: flex;
     flex-direction: column;
-    gap: 4  px;
+    gap: 4px;
 }
 .navTitle {
     font-size: 11px;

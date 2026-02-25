@@ -19,6 +19,6 @@
 }
 .input:focus {
     outline: none;
-    border-color: var(--avocadoMain);
+    border-color: var(--blue);
     box-shadow: 0 0 0 3px #1f2b15;
 }

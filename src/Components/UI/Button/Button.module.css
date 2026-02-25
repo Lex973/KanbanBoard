@@ -15,16 +15,19 @@
     background: var(--bgSecondary);
     color: var(--textPrimary);
     border: 1px solid #2f363D;
+    display: flex;
+    justify-content: center;
 }
 .btnSecondary:hover {
     background: var(--bgTertiary);
 }
 .btnPrimary {
-    background: linear-gradient(135deg, var(--avocadoMain), var(--avocadoDark));
-    color: white;
-    box-shadow: 0 4px 12px rgba(139, 195, 74, 0.3);
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(135deg,var(--bg), #0f1419);
+    color: var(--blue);
 }
 .btnPrimary:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 4px 16px var(--avocadoDark);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px #6fa3ff33;
 }

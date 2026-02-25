@@ -33,7 +33,7 @@
     padding: 10px;
     border: none;
     background: transparent;
-    color: var(--textSecondary);
+    color: var(--textMuted);
     font-size: 14px;
     font-weight: 600;
     border-radius: 8px;
@@ -43,7 +43,7 @@
 }
 .active {
     background: var(--bgSecondary);
-    color: var(--avocadoDark);
+    color: var(--blue);
     box-shadow: var(--shadowSM);
 }
 .auth-log-title {

@@ -9,15 +9,7 @@ interface ColumnProps {
     index: number,
 }
 const Column = ({title, tasks, status, index}: ColumnProps) => {
-    console.log(index)
-
     const delay = index * 0.1;
-
-    const priorityWeight = {
-        high: 1,
-        medium: 2,
-        low: 3,
-    }
 
     const filteredTasks = tasks.filter(task => task.status === status)
     return (
@@ -29,7 +21,7 @@ const Column = ({title, tasks, status, index}: ColumnProps) => {
                 </div>
 
                 <div className="tasks">
-                    {filteredTasks.sort((a, b) => priorityWeight[a.priority] - priorityWeight[b.priority]).map((task) => {
+                    {filteredTasks.map((task) => {
                         return <div key={task.id} className="task">
                             <div className="taskTitle">{task.title}</div>
                             <div className="meta">

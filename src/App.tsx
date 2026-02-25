@@ -12,11 +12,12 @@ import {getUserData} from "./api/data.ts";
 import {useFormState} from "./hooks/useFormState.ts";
 import GlassNotify from "./Components/Modals/Notify/GlassNotify.tsx";
 import type {CustomAuthResponseUserInfo} from "./types";
+import BgCircle from "./Components/UI/BgCircle/BgCircle.tsx";
 
 function App() {
     const [auth, setAuth] = useState<boolean | null>(null);
     const [appReady, setAppReady] = useState<boolean>(false);
-    const { handleError, handleSuccess, notifyOpen, notifyMessage, notifyType } = useFormState()
+    const { handleError, notifyOpen, notifyMessage, notifyType } = useFormState()
     const [userData, setUserData] = useState<CustomAuthResponseUserInfo | null>(null);
 
     useEffect(() => {
@@ -29,6 +30,9 @@ function App() {
     }, [])
 
     useEffect(() => {
+        setTimeout(() => {
+            setAppReady(true);
+        }, 2000)
         if (auth !== true) return;
         const fetchUserData = async () => {
             try {
@@ -36,15 +40,11 @@ function App() {
 
                 if (data.error) {
                     handleError(data.error);
-                } else {
-                    handleSuccess("Вы успешно вошли в систему")
                 }
 
                 setUserData(data);
             } catch (err) {
                 handleError(err);
-            } finally {
-                setAppReady(true);
             }
         }
         fetchUserData()
@@ -52,6 +52,8 @@ function App() {
 
     return (
     <div className="mainCont">
+        {createPortal(<BgCircle/>, document.body)}
+
         {createPortal(<Snowfall
             style={{zIndex: -1, position: "fixed"}}
             snowflakeCount={130}
@@ -63,12 +65,14 @@ function App() {
         )}
 
         {(!appReady || auth === null) && createPortal(<Loading/>, document.body)}
+
         {appReady && auth === true &&
             <>
                 <Sidebar setAuth={setAuth} userData={userData}/>
                 <MainContent />
             </>
         }
+
         {auth === false && <AuthModal setAuth={setAuth} />}
 
         {notifyOpen && createPortal(
