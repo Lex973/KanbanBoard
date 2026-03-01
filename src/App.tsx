@@ -13,11 +13,12 @@ import {useFormState} from "./hooks/useFormState.ts";
 import GlassNotify from "./Components/Modals/Notify/GlassNotify.tsx";
 import type {CustomAuthResponseUserInfo} from "./types";
 import BgCircle from "./Components/UI/BgCircle/BgCircle.tsx";
+import {MantineProvider} from "@mantine/core";
 
 function App() {
     const [auth, setAuth] = useState<boolean | null>(null);
     const [appReady, setAppReady] = useState<boolean>(false);
-    const { handleError, notifyOpen, notifyMessage, notifyType } = useFormState()
+    const { handleError, notifyOpen, notifyMessage, notifyType } = useFormState();
     const [userData, setUserData] = useState<CustomAuthResponseUserInfo | null>(null);
 
     useEffect(() => {
@@ -30,10 +31,10 @@ function App() {
     }, [])
 
     useEffect(() => {
-        setTimeout(() => {
+        if (auth !== true) {
             setAppReady(true);
-        }, 2000)
-        if (auth !== true) return;
+            return
+        }
         const fetchUserData = async () => {
             try {
                 const data = await getUserData();
@@ -45,41 +46,45 @@ function App() {
                 setUserData(data);
             } catch (err) {
                 handleError(err);
+            } finally {
+                setAppReady(true);
             }
         }
         fetchUserData()
     }, [auth]);
 
     return (
-    <div className="mainCont">
-        {createPortal(<BgCircle/>, document.body)}
+        <MantineProvider defaultColorScheme="dark">
+            <div className="mainCont">
+                {createPortal(<BgCircle/>, document.body)}
 
-        {createPortal(<Snowfall
-            style={{zIndex: -1, position: "fixed"}}
-            snowflakeCount={130}
-            speed={[1, 1.5]}
-            wind={[0.1, 0.1]}
-            radius={[0.5, 3]}
-            />,
-            document.body
-        )}
+                {createPortal(<Snowfall
+                        style={{zIndex: -1, position: "fixed"}}
+                        snowflakeCount={130}
+                        speed={[1, 1.5]}
+                        wind={[0.1, 0.1]}
+                        radius={[0.5, 3]}
+                    />,
+                    document.body
+                )}
 
-        {(!appReady || auth === null) && createPortal(<Loading/>, document.body)}
+                {(!appReady || auth === null) && createPortal(<Loading/>, document.body)}
 
-        {appReady && auth === true &&
-            <>
-                <Sidebar setAuth={setAuth} userData={userData}/>
-                <MainContent />
-            </>
-        }
+                {appReady && auth === true &&
+                    <>
+                        <Sidebar setAuth={setAuth} userData={userData}/>
+                        <MainContent />
+                    </>
+                }
 
-        {auth === false && <AuthModal setAuth={setAuth} />}
+                {auth === false && <AuthModal setAuth={setAuth} />}
 
-        {notifyOpen && createPortal(
-            <GlassNotify open={notifyOpen} message={notifyMessage} type={notifyType}/>,
-            document.body
-        )}
-    </div>
+                {notifyOpen && createPortal(
+                    <GlassNotify open={notifyOpen} message={notifyMessage} type={notifyType}/>,
+                    document.body
+                )}
+            </div>
+        </MantineProvider>
   )
 }
 

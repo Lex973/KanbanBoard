@@ -178,3 +178,34 @@
         transform: scale(1) translateY(0);
     }
 }
+.my-date-input {
+    --input-height: 40px;
+    background: #0b1016 !important;
+    border: 1px solid rgba(255,255,255,.14) !important;
+    border-radius: 12px !important;
+}
+
+.my-date-dropdown {
+    background: rgba(15, 17, 20, 0.85) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+}
+
+.my-date-day:hover {
+    background: rgba(120, 200, 255, 0.15) !important;
+}
+
+.my-date-day[data-selected] {
+    background: linear-gradient(90deg, #7CFF7A, #6AA8FF) !important;
+    color: #000 !important;
+}
+.my-date-label {
+    color: white;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+.addTaskLabel {
+    color: white;
+    font-size: calc(0.875rem * 1);
+}

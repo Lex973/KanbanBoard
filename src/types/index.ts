@@ -4,11 +4,11 @@ export type TaskStatus = 'todo' | 'progress' | 'done' | 'archive';
 export type Priority = 'low' | 'medium' | 'high' | 'all';
 
 export interface Task {
-    id?: number;
+    id: number;
     title: string;
     priority: Priority;
     status: TaskStatus;
-    time: string;
+    deadLine: string;
 }
 
 export interface CustomAuthResponseUserInfo{

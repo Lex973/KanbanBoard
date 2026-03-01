@@ -30,9 +30,7 @@ const GlassNotify = ({open, title, message, type, duration = 3000}: GlassNotifyP
             const autoCloseTimer = setTimeout(() => {
                 setIsVisible(false);
 
-                setTimeout(() => {
-                    setShouldRender(false);
-                }, 300);
+                setShouldRender(false);
             }, duration);
 
             return () => clearTimeout(autoCloseTimer);

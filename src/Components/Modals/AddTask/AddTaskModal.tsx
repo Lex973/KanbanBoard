@@ -1,6 +1,8 @@
 import './AddTask.css';
 import type {Priority, TaskStatus} from "../../../types";
 import {type ChangeEvent, type FormEvent, useState} from "react";
+import {DatePickerInput} from "@mantine/dates";
+
 
 interface AddTaskModalProps {
     open: boolean;
@@ -15,14 +17,20 @@ const AddTaskModal = ({open, onClose, onCreateTask, handleError, handleSuccess}:
     const [priorityTask, setPriorityTask] = useState<Priority>('low');
     const [statusTask, setStatusTask] = useState<TaskStatus>('todo');
 
+    const [deadLine, setDeadLine] = useState<string | null>();
+
     if (!open) return null;
 
     function createTask() {
+        if (!deadLine) {
+            handleError('Выберите дату')
+            return;
+        }
         if (nameTask.length < 3) {
             handleError('Недопустимая длина задачи');
             return;
         }
-        onCreateTask(nameTask, priorityTask, statusTask, '18:00');
+        onCreateTask(nameTask, priorityTask, statusTask, deadLine);
         handleSuccess('Задача успешно добавлена!');
 
         onClose();
@@ -34,7 +42,7 @@ const AddTaskModal = ({open, onClose, onCreateTask, handleError, handleSuccess}:
     };
 
     const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault(); // для кнопки не обязательно, но можно
+        event.preventDefault();
         createTask()
     };
 
@@ -58,6 +66,7 @@ const AddTaskModal = ({open, onClose, onCreateTask, handleError, handleSuccess}:
                     ➕ Новая задача
                 </div>
 
+                <label htmlFor="titleInput" className='addTaskLabel'>Введите название</label>
                 <form action="" onSubmit={(event: FormEvent<HTMLFormElement>) => handleSubmit(event)}>
                     <input
                         id="titleInput"
@@ -65,21 +74,43 @@ const AddTaskModal = ({open, onClose, onCreateTask, handleError, handleSuccess}:
                         onChange={(event: ChangeEvent<HTMLInputElement>) =>
                             setNameTask(event.target.value)
                         }
-                        placeholder="Название задачи"
+                        placeholder="Название"
                     />
                 </form>
 
+                <label htmlFor="priorityInput" className='addTaskLabel'>Выберите приоритет</label>
                 <select id="priorityInput" onChange={(event: ChangeEvent<HTMLSelectElement>) => setPriorityTask(event.target.value as Priority)}>
                     <option value="high">Высокий приоритет</option>
                     <option value="medium">Средний приоритет</option>
                     <option value="low">Низкий приоритет</option>
                 </select>
 
+                <label htmlFor="columnInput" className='addTaskLabel'>Выберите статус</label>
                 <select id="columnInput" onChange={(event: ChangeEvent<HTMLSelectElement>) => setStatusTask(event.target.value as TaskStatus)}>
                     <option value="todo">К выполнению</option>
                     <option value="progress">В процессе</option>
                     <option value="done">Завершено</option>
                 </select>
+
+                <DatePickerInput
+                    label="Дата"
+                    placeholder="Выберите дату"
+                    value={deadLine}
+                    valueFormat="YYYY-MM-DD"
+                    onChange={setDeadLine}
+                    classNames={{
+                        label: 'my-date-label',
+                        input: 'my-date-input',
+                        calendarHeader: 'my-date-header',
+                        day: 'my-date-day',
+                    }}
+                    popoverProps={{
+                        withinPortal: false,
+                        classNames: {
+                            dropdown: 'my-date-dropdown'
+                        }
+                    }}
+                />
 
                 <button
                     id="createTask"

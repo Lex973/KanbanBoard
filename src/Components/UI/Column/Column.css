@@ -81,3 +81,38 @@
     font-family: 'Inter Extra Light', sans-serif;
     font-weight: 500;
 }
+.column-active {
+    box-shadow: 0 10px 30px #6fa3ff33;
+    border: 2px dashed #4a9eda;
+}
+.taskDone {
+    opacity: 0.6;
+    border-color: var(--green);
+}
+.taskDone .taskTitle {
+    text-decoration: line-through;
+    color: var(--muted);
+}
+.taskArchive {
+    opacity: 0.4;
+    filter: grayscale(1);
+}
+
+.taskArchive .taskTitle {
+    color: var(--muted);
+}
+
+.deadline-yellow {
+    color: rgba(255, 184, 77, 0.78);
+}
+.deadline-red {
+    color: rgba(255, 107, 107, 0.78);
+}
+.deadline-overdue {
+    color: #6b6b7a;
+    text-decoration: line-through;
+}
+.deadline-archive {
+    color: #6b6b7a;
+    text-decoration: line-through;
+}
