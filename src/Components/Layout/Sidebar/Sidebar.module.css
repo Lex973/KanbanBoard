@@ -1,0 +1,27 @@
+.sidebar {
+    width: 250px;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    transition: all 0.3s ease;
+}
+.logo {
+    font-weight: 700;
+    font-size: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: white;
+}
+.sidebarContainer {
+    border-right: 1px solid var(--border);
+    background: linear-gradient(180deg,rgba(255,255,255,.05),transparent);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}

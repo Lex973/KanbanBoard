@@ -1,0 +1,93 @@
+.wrapper {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.card {
+    background:
+            linear-gradient(
+                    135deg,
+                    rgba(34,197,94,0.1),
+                    rgba(16,185,129,0.1)
+            );
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    box-shadow:
+            0 5px 3px rgba(16,185,129,0.25),
+            inset 0 0 0 1px rgba(255,255,255,0.06);
+    overflow: hidden;
+    min-width: 280px;
+    max-width: 340px;
+    padding: 12px 18px;
+    transform: translateZ(0);
+    border-radius: 7px;
+}
+.content {
+    z-index: 1;
+}
+
+.title {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #d1fae5;
+    margin-bottom: 4px;
+}
+
+.text {
+    font-size: 13px;
+    color: #ecfdf5;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.card.error {
+    background:
+            linear-gradient(
+                    135deg,
+                    rgba(239,68,68,0.18),
+                    rgba(244,63,94,0.08)
+            );
+    border: 1px solid rgba(248,113,113,0.35);
+    box-shadow:
+            0 5px 3px rgba(239,68,68,0.25),
+            inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+.card.error .glow {
+    background:
+            radial-gradient(
+                    circle,
+                    rgba(248,113,113,0.45),
+                    transparent 60%
+            );
+}
+
+.card.error .title {
+    color: #fee2e2;
+}
+
+.card.error .text {
+    color: #fff1f2;
+}
+
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(150px) scale(0.85); }
+    to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes slideOut {
+    from { opacity: 1; transform: translateX(0) scale(1); }
+    to   { opacity: 0; transform: translateX(150px) scale(0.85); }
+}
+.enter .card {
+    animation: slideIn 0.3s ease forwards;
+}
+
+.leave .card {
+    animation: slideOut 0.3s ease forwards;
+}

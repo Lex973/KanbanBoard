@@ -1,0 +1,38 @@
+.bg-layer {
+    position: fixed;
+    inset: 0;
+    z-index: -4;
+    overflow: hidden;
+}
+.blob {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    filter: blur(80px);
+    opacity: .18;
+    animation: float 26s linear infinite;
+}
+.blob.blue {
+    background: #5e8cff;
+}
+.blob.green {
+    background: #7cff6b;
+}
+.blob.b2 {
+    right: -100px;
+    top: 120px;
+}
+
+.blob-orange {
+    background: rgba(255, 184, 77, 0.51);
+    position: absolute;
+    width: 400px;
+    height: 200px;
+    filter: blur(60px);
+    opacity: .18;
+    animation: float 26s linear infinite;
+}
+.blob-orange.b3 {
+    bottom: -150px;
+    left: 45%;
+}

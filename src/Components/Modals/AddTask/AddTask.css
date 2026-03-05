@@ -1,0 +1,211 @@
+.modal {
+    position: fixed;
+    inset: 0;
+    background:
+            radial-gradient(500px 220px at 50% 0%, rgba(94,140,255,.18), transparent),
+            rgba(5,8,12,.75);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+/* ---------- CARD ---------- */
+
+.modal-card {
+    position: relative;
+    width: 380px;
+    max-width: calc(100vw - 32px);
+    padding: 18px 18px 20px;
+
+    background:
+            linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
+            #0e141b;
+
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 20px;
+
+    box-shadow:
+            0 30px 90px rgba(0,0,0,.7),
+            0 0 0 1px rgba(255,255,255,.05) inset;
+
+    animation: modalScale .25s ease;
+}
+
+/* ---------- HEADER ---------- */
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    color: #f5f8ff;
+    margin-bottom: 14px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ---------- FORM ---------- */
+
+.modal-task {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ---------- INPUTS ---------- */
+
+.modal-task input,
+.modal-task select {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.14);
+
+    background: #0b1016;
+    color: #f2f5ff;
+
+    font-size: 14px;
+    outline: none;
+
+    transition: .2s;
+}
+
+.modal-task input::placeholder {
+    color: #7f8aa3;
+}
+
+/* focus реально заметный */
+
+.modal-task input:focus,
+.modal-task select:focus {
+    border-color: #6b93ff;
+    box-shadow:
+            0 0 0 3px rgba(94,140,255,.25);
+}
+
+/* ---------- SELECT ARROW ---------- */
+
+.modal-task select {
+    appearance: none;
+    background-image:
+            linear-gradient(45deg, transparent 50%, #9aa7c7 50%),
+            linear-gradient(135deg, #9aa7c7 50%, transparent 50%);
+    background-position:
+            calc(100% - 18px) 50%,
+            calc(100% - 12px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+}
+
+/* ---------- PRIMARY BUTTON ---------- */
+
+.modal-task .primary {
+    margin-top: 10px;
+    height: 44px;
+
+    border-radius: 12px;
+    border: none;
+
+    background:
+            linear-gradient(135deg, #7cff6b, #5e8cff);
+
+    color: #07120c;
+    font-weight: 700;
+    font-size: 14px;
+
+    cursor: pointer;
+    transition: .2s;
+
+    box-shadow:
+            0 12px 28px rgba(94,140,255,.35);
+}
+
+.modal-task .primary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+            0 16px 40px rgba(94,140,255,.45);
+}
+
+.modal-task .primary:active {
+    transform: translateY(0);
+}
+
+/* ---------- CLOSE ---------- */
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.14);
+
+    background: #0b1016;
+    color: #b9c4ff;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: .2s;
+}
+
+.modal-close:hover {
+    background: #111827;
+    color: #ffffff;
+    border-color: #6b93ff;
+}
+
+/* ---------- ANIM ---------- */
+
+@keyframes modalScale {
+    from {
+        opacity: 0;
+        transform: scale(.92) translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+.my-date-input {
+    --input-height: 40px;
+    background: #0b1016 !important;
+    border: 1px solid rgba(255,255,255,.14) !important;
+    border-radius: 12px !important;
+}
+
+.my-date-dropdown {
+    background: rgba(15, 17, 20, 0.85) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+}
+
+.my-date-day:hover {
+    background: rgba(120, 200, 255, 0.15) !important;
+}
+
+.my-date-day[data-selected] {
+    background: linear-gradient(90deg, #7CFF7A, #6AA8FF) !important;
+    color: #000 !important;
+}
+.my-date-label {
+    color: white;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+.addTaskLabel {
+    color: white;
+    font-size: calc(0.875rem * 1);
+}

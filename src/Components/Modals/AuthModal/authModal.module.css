@@ -1,0 +1,70 @@
+.modal-auth-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+.modalAuth {
+    position: relative;
+    width: 550px;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: var(--shadowLG);
+    background: rgba(26, 31, 38, 0.6);
+    backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid #2f363d;
+}
+.authTabs {
+    padding: 4px;
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    background: var(--bgTertiary);
+    border-radius: 10px;
+}
+.authBtn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    color: var(--textMuted);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    height: 40px;
+}
+.active {
+    background: var(--bgSecondary);
+    color: var(--blue);
+    box-shadow: var(--shadowSM);
+}
+.auth-log-title {
+    font-family: 'Inter Medium', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--textPrimary);
+    margin-bottom: 4px;
+}
+.auth-log-subtitle {
+    font-size: 12px;
+    color: var(--textSecondary);
+    margin-bottom: 24px;
+}
+.auth-log-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.auth-btn-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+}

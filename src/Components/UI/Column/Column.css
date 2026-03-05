@@ -1,0 +1,137 @@
+.column {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 300px;
+    position: relative;
+}
+.column::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(6px);
+    z-index: 0;
+    border-radius: 18px;
+}
+.column > * {
+    position: relative;
+}
+.columnHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.columnTitle {
+    font-weight: 500;
+    color: var(--text);
+    font-size: 18px;
+    font-family: 'Inter Regular', sans-serif;
+}
+.addTask {
+    margin-top: auto;
+    background: transparent;
+    border: 1px dashed var(--border);
+    color: var(--muted);
+    border-radius: 12px;
+    padding: 10px;
+    cursor: pointer;
+}
+.counter {
+    color: var(--muted);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+}
+.task {
+    background: rgba(255,255,255,.05);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: .2s;
+    cursor: pointer;
+}
+.task:hover {
+    transform: translateY(-3px) scale(1.01);
+    border-color: #5e8cff55;
+    box-shadow: 0 10px 30px #5e8cff22;
+}
+.taskTitle {
+    font-weight: 500;
+    color: var(--text);
+    font-size: 16px;
+    font-family: 'Inter Regular', sans-serif;
+}
+.meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+}
+.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.high {
+    color: var(--red);
+    font-family: 'Inter Extra Light', sans-serif;
+    font-weight: 500;
+}
+.medium {
+    color: var(--orange);
+    font-family: 'Inter Extra Light', sans-serif;
+    font-weight: 500;
+}
+.low {
+    color: var(--green);
+    font-family: 'Inter Extra Light', sans-serif;
+    font-weight: 500;
+}
+.column-active {
+    box-shadow: 0 10px 30px #6fa3ff33;
+    border: 2px dashed #4a9eda;
+}
+.taskDone {
+    opacity: 0.6;
+    border-color: var(--green);
+}
+.taskDone .taskTitle {
+    text-decoration: line-through;
+    color: var(--muted);
+}
+.taskArchive {
+    opacity: 0.4;
+    filter: grayscale(1);
+}
+
+.taskArchive .taskTitle {
+    color: var(--muted);
+}
+
+.deadline-yellow {
+    color: rgba(255, 184, 77, 0.78);
+}
+.deadline-red {
+    color: rgba(255, 107, 107, 0.78);
+}
+.deadline-overdue {
+    color: #6b6b7a;
+    text-decoration: line-through;
+}
+.deadline-archive {
+    color: #6b6b7a;
+    text-decoration: line-through;
+}
+.columnGoida {
+    display: flex;
+    margin-left: auto;
+}

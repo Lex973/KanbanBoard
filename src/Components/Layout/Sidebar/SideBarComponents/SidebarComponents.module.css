@@ -1,0 +1,118 @@
+.userProfileCont {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    cursor: pointer;
+    transition: .2s;
+}
+.userLogo {
+    min-width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg,var(--green),var(--blue));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #07110c;
+    font-weight: 700;
+}
+.userName {
+    font-size: 15px;
+    color: var(--textPrimary);
+}
+.userEmail {
+    font-size: 13px;
+    color: #9aa4b2;
+    font-family: 'Inter Extra Light', 'sans-serif';
+}
+.infoCont {
+    display: flex;
+    flex-direction: column;
+}
+.userProfileCont:hover {
+    transform: translateY(-3px) scale(1.01);
+    border: 1px solid #5e8cff55;
+    box-shadow: 0 10px 30px #5e8cff22;
+}
+
+.timeWidget {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px;
+    cursor: pointer;
+    transition: .2s;
+    display: flex;
+    flex-direction: column;
+}
+.currentTime {
+    color: var(--textPrimary);
+    display: flex;
+    align-items: center;
+    font-family: 'Inter Regular', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+.currentDate {
+    margin-top: 5px;
+    font-size: 12px;
+    color: var(--textSecondary);
+    font-weight: 500;
+}
+.dateColon {
+    color: var(--textPrimary);
+    font-size: 30px;
+    animation: pulseСolon 1.6s infinite steps(2);
+    height: 31px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+@keyframes pulseСolon {
+    0%, 49% {
+        opacity: 1;
+    }
+    50%, 100% {
+        opacity: 0;
+    }
+}
+
+.navSection {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.navTitle {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--textMuted);
+    padding: 0 12px 8px;
+    font-family: "Inter Regular", monospace;
+}
+.navItem {
+    list-style-type: none;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'INter Extra Light', 'sans-serif';
+}
+.navItem:hover {
+    background: rgba(255,255,255,.06);
+}
+.active {
+    background: rgba(255,255,255,.06);
+}
