@@ -13,7 +13,6 @@ interface SidebarProps {
 }
 
 const Sidebar = ({setAuth, userData}: SidebarProps) => {
-
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {

@@ -1,0 +1,136 @@
+.kebab-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 0;
+    transition: width 0.3s;
+    height: 28px;
+}
+
+.kebab-btn {
+    width: 0;
+    height: 28px;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+
+    transition:
+            opacity 0.15s ease,
+            width 0.15s ease,
+            background 0.15s ease,
+            border-color 0.15s ease,
+            transform 0.05s ease;
+}
+
+.kebab-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(220, 220, 230, 0.55);
+    transition: background 0.15s ease;
+}
+
+.column:hover .kebab-btn {
+    width: 20px;
+    opacity: 1;
+    pointer-events: auto;
+}
+.column:hover .kebab-wrapper {
+    width: 20px;
+}
+
+.kebab-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.10);
+}
+
+.kebab-btn:hover .kebab-dot {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.kebab-btn:active {
+    transform: scale(0.98);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: -15px;
+    right: -205px;
+    z-index: 99999;
+
+    width: 190px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    background: rgba(18, 20, 26, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+    transform-origin: top right;
+    animation: dropdownIn 140ms ease-out;
+}
+
+@keyframes dropdownIn {
+    from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.dropdown-menu button {
+    height: 38px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+
+    color: rgba(235, 235, 245, 0.92);
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+}
+
+.dropdown-menu button:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.dropdown-menu button:active {
+    transform: scale(0.99);
+}
+.double-dropdown {
+    position: absolute;
+    top: 50px;
+    right: -153px;
+    list-style: none;
+    background: rgba(18, 20, 26, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: dropdownIn 150ms ease-out;
+}

@@ -7,6 +7,7 @@ import {createPortal} from "react-dom";
 import GlassNotify from "../../Modals/Notify/GlassNotify.tsx";
 import {useFormState} from "../../../hooks/useFormState.ts";
 import {useFilteredAndSearchedTasks} from "../../../hooks/useTasks.ts";
+import ConfirmModal from "../../Modals/ConfirmModal/ConfirmModal.tsx";
 
 const MainContent = () => {
     let nextId = useRef(6);
@@ -14,6 +15,8 @@ const MainContent = () => {
     const [open, setOpen] = useState(false);
     const { handleError, handleSuccess, notifyOpen, notifyMessage, notifyType } = useFormState()
 
+    const [openConfirmModal, setOpenConfirmModal] = useState<boolean>(false);
+    let confirmResolver = useRef<((value: boolean) => void) | null>(null);
 
     const [tasks, setTasks] = useState<Task[]>([
         {
@@ -45,14 +48,33 @@ const MainContent = () => {
         setTasks(prev => [...prev, newTask]);
     }
 
-    function onClear() {
-        setTasks([])
+    function confirm(): Promise<boolean> {
+        setOpenConfirmModal(true)
+
+        return new Promise(resolve => {
+            confirmResolver.current = resolve;
+        })
+    }
+
+    function confirmYes() {
+        confirmResolver.current?.(true);
+        setOpenConfirmModal(false);
+    }
+    function confirmNo() {
+        confirmResolver.current?.(false);
+        setOpenConfirmModal(false)
+    }
+
+    async function onClear() {
+        const confirmed = await confirm()
+        if (confirmed) setTasks([]);
     }
 
     const isSearchEmpty = tasks.length !== 0 && sortedAndSearchedTasks.length === 0;
-
     return (
         <section style={{width:'100%'}}>
+            {openConfirmModal && createPortal(<ConfirmModal confirmYes={confirmYes} confirmNo={confirmNo}/>, document.body)}
+
             <Header setOpen={setOpen} onFilter={setPriorityFilter} onSearch={setSearchQuery} value={priorityFilter} onClear={onClear}/>
 
             {isSearchEmpty

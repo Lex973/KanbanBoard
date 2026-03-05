@@ -7,7 +7,18 @@
     flex-direction: column;
     gap: 12px;
     min-height: 300px;
+    position: relative;
+}
+.column::before {
+    content: "";
+    position: absolute;
+    inset: 0;
     backdrop-filter: blur(6px);
+    z-index: 0;
+    border-radius: 18px;
+}
+.column > * {
+    position: relative;
 }
 .columnHeader {
     display: flex;
@@ -32,6 +43,10 @@
 .counter {
     color: var(--muted);
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
 }
 .task {
     background: rgba(255,255,255,.05);
@@ -115,4 +130,8 @@
 .deadline-archive {
     color: #6b6b7a;
     text-decoration: line-through;
+}
+.columnGoida {
+    display: flex;
+    margin-left: auto;
 }

@@ -7,15 +7,14 @@ interface BoardProps {
     tasks: Array<Task>;
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }
+const columns = [
+    { id: 1, status: 'todo', title: 'К выполнению' },
+    { id: 2, status: 'progress', title: 'В процессе' },
+    { id: 3, status: 'done', title: 'Завершено' },
+    { id: 4, status: 'archive', title: 'Архив' },
+];
 
 const Board = ({tasks, setTasks}: BoardProps) => {
-    const columns = [
-        { id: 1, status: 'todo', title: 'К выполнению' },
-        { id: 2, status: 'progress', title: 'В процессе' },
-        { id: 3, status: 'done', title: 'Завершено' },
-        { id: 4, status: 'archive', title: 'Архив' },
-    ];
-
     const dragTaskId = useRef<number | null>(null)
 
     const [dragOverColumn, setDragOverColumn] = useState<string | null>(null)

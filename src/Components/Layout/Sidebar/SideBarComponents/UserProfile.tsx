@@ -16,13 +16,16 @@ const UserProfile = ({userData}: UserProfile) => {
             ? `${parts[0][0]}${parts[1][0] ?? ''}`.toUpperCase()
             : `${parts[0]?.[0] ?? ''}${parts[0]?.[1] ?? ''}`.toUpperCase();
 
+    const truncatedEmail  = userEmail.length >= 16 ? userEmail.slice(0, 16) + '...' : userEmail;
+    console.log(truncatedEmail);
+
     return (
         <div className={classes.userProfileCont}>
             <div className={classes.userLogo}>{logoName}</div>
 
             <div className={classes.infoCont}>
                 <p className={classes.userName}>{userName}</p>
-                <p className={classes.userEmail}>{userEmail}</p>
+                <p className={classes.userEmail}>{truncatedEmail}</p>
             </div>
         </div>
     );

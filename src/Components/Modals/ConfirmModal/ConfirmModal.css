@@ -1,0 +1,55 @@
+.confirm-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    z-index: 9999;
+}
+.confirm-modal {
+    width: 600px;
+    height: 200px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px 14px 20px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    backdrop-filter: blur(6px);
+}
+.confirm-modal h1 {
+    text-align: center;
+    font-family: 'Inter Medium', cursive;
+    color: #e3e3e3;
+}
+.buttons {
+    margin-top: auto;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+}
+.confirm-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px 12px;
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    min-width: 160px;
+    font-family: 'Inter Medium', sans-serif;
+}
+.confirm-btn:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.09);
+}

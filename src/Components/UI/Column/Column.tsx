@@ -3,6 +3,7 @@ import type {Task} from "../../../types";
 import {motion} from "framer-motion";
 import { memo } from "react";
 import {getDeadLineInfo} from "../../../utils/deadline.ts";
+import KebabMenu from "../KebabMenu/KebabMenu.tsx";
 
 interface ColumnProps {
     status: string;
@@ -30,8 +31,8 @@ const Column = ({title, tasks, status, index, isDragOver, onDragStart, onDragOve
                 <div className="columnHeader">
                     <div className="columnTitle">{title}</div>
                     <div className="columnGoida">
-                        div.
                         <div className="counter">{filteredTasks.length}</div>
+                        <KebabMenu/>
                     </div>
                 </div>
 

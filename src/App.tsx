@@ -29,12 +29,12 @@ function App() {
 
         checkAuth()
     }, [])
-
     useEffect(() => {
         if (auth !== true) {
             setAppReady(true);
             return
         }
+
         const fetchUserData = async () => {
             try {
                 const data = await getUserData();
@@ -50,12 +50,24 @@ function App() {
                 setAppReady(true);
             }
         }
+
         fetchUserData()
     }, [auth]);
 
+
+    const [position, setPosition] = useState({
+        x: 0,
+        y: 0,
+    });
+
     return (
         <MantineProvider defaultColorScheme="dark">
-            <div className="mainCont">
+            <div className="mainCont" onPointerMove={e => {
+                setPosition({
+                    x: e.clientX,
+                    y: e.clientY,
+                })
+            }}>
                 {createPortal(<BgCircle/>, document.body)}
 
                 {createPortal(<Snowfall
@@ -83,6 +95,9 @@ function App() {
                     <GlassNotify open={notifyOpen} message={notifyMessage} type={notifyType}/>,
                     document.body
                 )}
+
+                <div className='blob-orange-main' style={{ transform: `translate(${position.x}px, ${position.y}px)`}}>
+                </div>
             </div>
         </MantineProvider>
   )
