@@ -1,42 +1,32 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+:root {
+  --bgPrimary: #0f1419;
+  --bgSecondary: #1a1f26;
+  --bgTertiary: #252b34;
+  --avocadoMain: #8bc34a;
+  --avocadoDark: #5f8f2f;
+  --avocadoLight: #aed581;
+  --textPrimary: #e8ecef;
+  --textSecondary: #b0b8c0;
+  --textMuted: #6e7782;
+
+  --shadowSM: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadowMD: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadowLG: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+  background: var(--bgPrimary);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+a, p, h2, div, span {
+  font-family: 'Inter Medium', sans-serif;
+  font-size: 30px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+h1 {
+  font-family: 'Inter Bold', sans-serif;
 }
